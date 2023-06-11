@@ -31,7 +31,8 @@ function buildTable(data) {
       );
     });
 
-    return table.toString();
+    // return table.toString()
+    return table.toString().replace(/\u001b\[\d+m/g, "");
   } catch (error) {
     return "";
   }
