@@ -1,4 +1,10 @@
-const { getInfoDolar, getDollars } = require("../service");
+const {
+  getInfoDolar,
+  getDollars,
+  setClient,
+  getChannel,
+  setChannel,
+} = require("../service");
 const { dollarTypes } = require("../constants");
 const {
   convertToLowerCase,
@@ -7,12 +13,19 @@ const {
   comparePrices,
 } = require("../utils");
 
-let client;
-let messageSaved;
-
 function captureClient(newClient) {
   try {
-    client = newClient;
+    if (!newClient) return;
+    setClient(newClient);
+  } catch (error) {
+    return;
+  }
+}
+
+function captureChannel(message) {
+  try {
+    if (!message) return;
+    setChannel(message);
   } catch (error) {
     return;
   }
@@ -33,7 +46,7 @@ function sendMessage(message, data) {
 
 function handleMessage(message) {
   try {
-    messageSaved = message;
+    if (!message) return;
     const messageLower = convertToLowerCase(message.content);
     const findMessage = dollarTypes.find(
       (type) => !!messageLower.includes(type)
@@ -70,8 +83,9 @@ async function sendPriceDollar() {
     const result = await getInfoDolar();
     const isNeedSay = comparePrices(oldsDollars, result);
     if (!messageSaved || !isNeedSay) return;
-   // messageSaved.channel.send("**Los precios del dolar son: **");
-    sendMessage(messageSaved, result);
+    const channelMessage = getChannel();
+    channelMessage.channel.send("**Los precios del dolar son: **");
+    sendMessage(channelMessage, result);
   } catch (error) {
     return;
   }
@@ -82,4 +96,5 @@ module.exports = {
   captureClient,
   sendIteraction,
   handleMessage,
+  captureChannel,
 };

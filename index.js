@@ -2,7 +2,7 @@ const {
   credentials: { botToken },
 } = require("./src/constants");
 const { initCron } = require("./src/jobs");
-const { handleMessage } = require("./src/controller");
+const { handleMessage, captureChannel } = require("./src/controller");
 const {
   registerCommands,
   NoCommand,
@@ -26,13 +26,19 @@ const commandHandler = new SearchDollarCommand(new NoCommand(null));
 
 // When the client is ready, run this code (only once)
 client.once("ready", async () => {
-  await registerCommands();
-  initCron(client);
-  console.log("Ready!");
+  try {
+    await registerCommands();
+    initCron(client);
+    console.log("Ready!");
+  } catch (error) {
+    console.error(error);
+    return;
+  }
 });
 
 client.on("messageCreate", async (message) => {
   try {
+    captureChannel(message);
     if (!!message.author.bot) return;
     handleMessage(message);
   } catch (error) {
@@ -42,8 +48,14 @@ client.on("messageCreate", async (message) => {
 });
 
 client.on("interactionCreate", async (interaction) => {
-  if (interaction.isChatInputCommand()) {
-    commandHandler.handleInteraction(interaction);
+  try {
+    captureChannel(interaction);
+    if (interaction.isChatInputCommand()) {
+      commandHandler.handleInteraction(interaction);
+    }
+  } catch (error) {
+    console.error(error);
+    return;
   }
 });
 

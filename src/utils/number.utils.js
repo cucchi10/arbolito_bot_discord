@@ -21,8 +21,9 @@ function comparePrices(oldsDollars, newDollars) {
     const newPrice = newDollars[key].venta;
     if (isNumber(oldPrice) && isNumber(newPrice)) {
       const difference = Math.abs(newPrice - oldPrice);
+      const percentDifference = (difference / oldPrice) * 100;
 
-      if (difference >= brechaCotiza) {
+      if (percentDifference >= brechaCotiza) {
         conditional = true;
       }
     }

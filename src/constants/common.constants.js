@@ -1,7 +1,7 @@
 const apiUrl = "https://www.dolarsi.com/api/dolarSiInfo.xml";
 const noCotiza = "No cotiza";
 const sinDatos = "-";
-const brechaCotiza = 5;
+const brechaCotiza = 1;
 
 const supportedInteractions = Object.freeze({
   dolar: `dolar`,
