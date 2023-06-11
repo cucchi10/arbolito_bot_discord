@@ -1,9 +1,9 @@
 const CronJob = require("cron");
 const { sendPriceDollar } = require("../controller");
 
-// Run every 5 minutes
+// Run every 1 minutes
 const syncDollars = new CronJob.CronJob(
-  "*/5 * * * *",
+  "*/1 * * * *",
   sendPriceDollar,
   null,
   true
