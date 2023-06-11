@@ -70,7 +70,7 @@ async function sendPriceDollar() {
     const result = await getInfoDolar();
     const isNeedSay = comparePrices(oldsDollars, result);
     if (!messageSaved || !isNeedSay) return;
-    messageSaved.channel.send("**Los precios del dolar son: **");
+   // messageSaved.channel.send("**Los precios del dolar son: **");
     sendMessage(messageSaved, result);
   } catch (error) {
     return;
