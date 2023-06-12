@@ -31,14 +31,15 @@ function captureChannel(message) {
   }
 }
 
-function sendMessage(message, data) {
+function sendMessage(message, data, replyFunction = null) {
   try {
     const formatedData = formatDataTable(data);
     const table = buildTable(formatedData);
-    message.channel.send(`\`\`\`${table}\`\`\``);
-    // tables.forEach((table) => {
-    //   message.channel.send(`\`\`\`${table}\`\`\``);
-    // });
+    if (replyFunction) {
+      replyFunction(message, `\`\`\`${table}\`\`\``);
+    } else {
+      message.channel.send(`\`\`\`${table}\`\`\``);
+    }
   } catch (error) {
     return;
   }
@@ -70,8 +71,7 @@ function handleMessage(message) {
 function sendIteraction(interaction, replyFunction) {
   try {
     const result = getDollars();
-    replyFunction(interaction, "**Los precios del dolar son: **");
-    sendMessage(interaction, result);
+    sendMessage(interaction, result, replyFunction);
   } catch (error) {
     return;
   }
