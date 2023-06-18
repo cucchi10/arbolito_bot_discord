@@ -1,14 +1,4 @@
-/**
- * function to validate an argument if it is of type string and check if it contains at least one letter.
- * @returns true || false
- */
-function validateStringArgument(string) {
-  if (typeof string !== "string" || string.trim().length === 0) {
-    return false;
-  }
-  return true;
-}
-
+const { validateStringArgument } = require("./validations.utils.js");
 /**
  * function to standardize a word to uppercase.
  * @param {String}

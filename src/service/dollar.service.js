@@ -15,7 +15,6 @@ async function getRawData() {
     );
     return parseData.cotiza;
   } catch (error) {
-    console.log(error);
     return null;
   }
 }
@@ -73,7 +72,6 @@ async function getInfoDolar() {
     setDollarsStore(formatedData);
     return formatedData;
   } catch (error) {
-    console.log(error);
     return null;
   }
 }

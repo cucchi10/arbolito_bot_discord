@@ -11,10 +11,11 @@ const syncDollars = new CronJob.CronJob(
 
 function initCron(client) {
   try {
+    console.log("Start Cron!");
     // captureClient(client);
     syncDollars.start();
   } catch (error) {
-    console.log(error);
+    return;
   }
 }
 

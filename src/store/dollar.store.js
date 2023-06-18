@@ -2,15 +2,9 @@ const {
   getDollarsDefault,
   dollarsKeysDefaultStringify,
 } = require("../constants");
+const { validateDollarStore } = require("../utils");
 
 let dollarsStore;
-
-function validateStore(store) {
-  return (
-    !dollarsStore ||
-    JSON.stringify(Object.keys(store)) !== dollarsKeysDefaultStringify
-  );
-}
 
 function setDefaultDollarStore() {
   dollarsStore = getDollarsDefault();
@@ -22,7 +16,7 @@ function getDollarsStore() {
 
 function CheckDollarStore(fn) {
   return function (...args) {
-    if (!validateStore(dollarsStore)) {
+    if (!validateDollarStore(dollarsStore, dollarsKeysDefaultStringify)) {
       setDefaultDollarStore();
     }
     return fn(...args);

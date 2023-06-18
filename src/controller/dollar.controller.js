@@ -1,4 +1,6 @@
 const {
+  getHistorial,
+  interactionHistorial,
   getInfoDolar,
   getDollars,
   setClient,
@@ -79,9 +81,12 @@ function sendIteraction(interaction, replyFunction) {
 
 async function sendPriceDollar() {
   try {
-    const oldsDollars = getDollars();
+    const oldsDollars = getHistorial();
     const result = await getInfoDolar();
+    if (!result) return;
     const isNeedSay = comparePrices(oldsDollars, result);
+    interactionHistorial(result);
+    const messageSaved = getChannel();
     if (!messageSaved || !isNeedSay) return;
     const channelMessage = getChannel();
     channelMessage.channel.send("**Los precios del dolar son: **");
