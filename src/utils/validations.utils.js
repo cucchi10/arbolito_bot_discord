@@ -1,6 +1,15 @@
 const { isNumber } = require("./number.utils.js");
 
 /**
+ * Function to Object has length.
+ * @param {Object}
+ * @returns true || false
+ */
+function isObject(store) {
+  return store && typeof store === "object" && Object.values(store).length;
+}
+
+/**
  * Function to compare Keys.
  * @param {Object}
  * @returns true || false
@@ -54,4 +63,5 @@ module.exports = {
   validateTimeHistorialStore,
   validateHistorialStore,
   validateStringArgument,
+  isObject,
 };

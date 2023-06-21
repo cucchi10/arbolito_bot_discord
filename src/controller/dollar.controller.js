@@ -83,13 +83,11 @@ function sendIteraction(interaction, replyFunction) {
 async function sendPriceDollar() {
   try {
     const oldsDollars = getHistorial();
+    const oldDollars = getDollars();
     const result = await getInfoDolar();
     if (!result) return;
     const { isNeedSay, dollarsBrecha } = comparePrices(oldsDollars, result);
-    const isSamePrice = samePrices(
-      oldsDollars[oldsDollars.length - 1],
-      dollarsBrecha
-    );
+    const isSamePrice = samePrices(oldDollars, dollarsBrecha);
     interactionHistorial(result);
     const messageSaved = getChannel();
     if (!messageSaved || !isNeedSay || isSamePrice) return;

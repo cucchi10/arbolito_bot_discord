@@ -1,4 +1,5 @@
 const { noCotiza, brechaCotiza } = require("../constants");
+const { isObject } = require("./validations.utils");
 
 function isNumber(value) {
   return (
@@ -53,7 +54,7 @@ function comparePrices(oldsDollars, newDollars) {
 
 function samePrices(prevDollars, dollarsBrecha) {
   let conditional = false;
-  if (!prevDollars) return conditional;
+  if (!isObject(prevDollars) || !isObject(dollarsBrecha)) return conditional;
 
   Object.keys(dollarsBrecha).forEach((key) => {
     const oldPrice = prevDollars[key].venta;
