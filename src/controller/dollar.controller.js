@@ -13,6 +13,7 @@ const {
   buildTable,
   formatDataTable,
   comparePrices,
+  samePrices,
 } = require("../utils");
 
 function captureClient(newClient) {
@@ -84,14 +85,19 @@ async function sendPriceDollar() {
     const oldsDollars = getHistorial();
     const result = await getInfoDolar();
     if (!result) return;
-    const isNeedSay = comparePrices(oldsDollars, result);
+    const { isNeedSay, dollarsBrecha } = comparePrices(oldsDollars, result);
+    const isSamePrice = samePrices(
+      oldsDollars[oldsDollars.length - 1],
+      dollarsBrecha
+    );
     interactionHistorial(result);
     const messageSaved = getChannel();
-    if (!messageSaved || !isNeedSay) return;
+    if (!messageSaved || !isNeedSay || isSamePrice) return;
     const channelMessage = getChannel();
     channelMessage.channel.send("**Los precios del dolar son: **");
     sendMessage(channelMessage, result);
   } catch (error) {
+    console.log(error);
     return;
   }
 }

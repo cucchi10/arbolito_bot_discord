@@ -19,8 +19,14 @@ function getDiference(newValue, oldValue) {
 }
 
 function comparePrices(oldsDollars, newDollars) {
-  if (!oldsDollars.length) return true;
-  let conditional = false;
+  let isNeedSay = false;
+  const dollarsBrecha = {};
+  if (!oldsDollars.length)
+    return {
+      isNeedSay,
+      dollarsBrecha,
+    };
+
   oldsDollars.forEach((oldDollars) => {
     Object.keys(oldDollars).forEach((key) => {
       const oldPrice = oldDollars[key].venta;
@@ -30,10 +36,34 @@ function comparePrices(oldsDollars, newDollars) {
         const percentDifference = (difference / oldPrice) * 100;
 
         if (percentDifference >= brechaCotiza) {
-          conditional = true;
+          isNeedSay = true;
+          if (!dollarsBrecha[key]) {
+            dollarsBrecha[key] = newDollars[key];
+          }
         }
       }
     });
+  });
+
+  return {
+    isNeedSay,
+    dollarsBrecha,
+  };
+}
+
+function samePrices(prevDollars, dollarsBrecha) {
+  let conditional = false;
+  if (!prevDollars) return conditional;
+
+  Object.keys(dollarsBrecha).forEach((key) => {
+    const oldPrice = prevDollars[key].venta;
+    const newPrice = dollarsBrecha[key].venta;
+    if (isNumber(oldPrice) && isNumber(newPrice)) {
+      const difference = getDiference(newPrice, oldPrice);
+      if (difference === 0) {
+        conditional = true;
+      }
+    }
   });
 
   return conditional;
@@ -44,4 +74,5 @@ module.exports = {
   formatNumber,
   comparePrices,
   getDiference,
+  samePrices,
 };
