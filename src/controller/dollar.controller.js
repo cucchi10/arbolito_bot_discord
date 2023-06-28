@@ -94,6 +94,8 @@ async function sendPriceDollar() {
     const channelMessage = getChannel();
     channelMessage.channel.send("**Los precios del dolar son: **");
     sendMessage(channelMessage, result);
+    channelMessage.channel.send("**Las variaciones fueron en: **");
+    sendMessage(channelMessage, dollarsBrecha);
   } catch (error) {
     console.log(error);
     return;
