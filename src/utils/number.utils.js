@@ -53,21 +53,35 @@ function comparePrices(oldsDollars, newDollars) {
 }
 
 function samePrices(prevDollars, dollarsBrecha) {
-  let conditional = false;
-  if (!isObject(prevDollars) || !isObject(dollarsBrecha)) return conditional;
+  let isSamePrice = false;
+  const dollarsVariations = {};
+  if (!isObject(prevDollars) || !isObject(dollarsBrecha))
+    return {
+      isSamePrice,
+      dollarsVariations,
+    };
 
   Object.keys(dollarsBrecha).forEach((key) => {
     const oldPrice = prevDollars[key].venta;
     const newPrice = dollarsBrecha[key].venta;
     if (isNumber(oldPrice) && isNumber(newPrice)) {
       const difference = getDiference(newPrice, oldPrice);
+      const percentDifference = (difference / oldPrice) * 100;
+      dollarsVariations[key] = {
+        ...dollarsBrecha[key],
+        ["venta anterior"]: oldPrice,
+        diferencia: `${percentDifference} %`,
+      };
       if (difference === 0) {
         conditional = true;
       }
     }
   });
 
-  return conditional;
+  return {
+    isSamePrice,
+    dollarsVariations,
+  };
 }
 
 module.exports = {

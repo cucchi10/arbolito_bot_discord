@@ -87,7 +87,10 @@ async function sendPriceDollar() {
     const result = await getInfoDolar();
     if (!result) return;
     const { isNeedSay, dollarsBrecha } = comparePrices(oldsDollars, result);
-    const isSamePrice = samePrices(oldDollars, dollarsBrecha);
+    const { isSamePrice, dollarsVariations } = samePrices(
+      oldDollars,
+      dollarsBrecha
+    );
     interactionHistorial(result);
     const messageSaved = getChannel();
     if (!messageSaved || !isNeedSay || isSamePrice) return;
@@ -95,7 +98,7 @@ async function sendPriceDollar() {
     channelMessage.channel.send("**Los precios del dolar son: **");
     sendMessage(channelMessage, result);
     channelMessage.channel.send("**Las variaciones fueron en: **");
-    sendMessage(channelMessage, dollarsBrecha);
+    sendMessage(channelMessage, dollarsVariations);
   } catch (error) {
     console.log(error);
     return;
