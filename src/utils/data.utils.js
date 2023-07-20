@@ -29,8 +29,7 @@ function extractedData({ Dolar, cotizador, valores_principales }) {
 function formatDataTable(data) {
   return Object.entries(data).map(([dollar, values]) => ({
     dollar,
-    compra: values.compra,
-    venta: values.venta,
+    ...values,
   }));
 }
 

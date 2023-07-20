@@ -94,11 +94,10 @@ async function sendPriceDollar() {
     interactionHistorial(result);
     const messageSaved = getChannel();
     if (!messageSaved || !isNeedSay || isSamePrice) return;
-    const channelMessage = getChannel();
-    channelMessage.channel.send("**Los precios del dolar son: **");
-    sendMessage(channelMessage, result);
-    channelMessage.channel.send("**Las variaciones fueron en: **");
-    sendMessage(channelMessage, dollarsVariations);
+    messageSaved.channel.send("**Los precios del dolar son: **");
+    sendMessage(messageSaved, result);
+    messageSaved.channel.send("**Las variaciones fueron en: **");
+    sendMessage(messageSaved, dollarsVariations);
   } catch (error) {
     console.log(error);
     return;

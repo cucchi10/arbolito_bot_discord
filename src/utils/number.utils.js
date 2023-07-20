@@ -19,6 +19,14 @@ function getDiference(newValue, oldValue) {
   return Math.abs(newValue - oldValue);
 }
 
+function getDiferencePercent(differenceValue, oldValue) {
+  return (differenceValue / oldValue) * 100;
+}
+
+function getSymbolNumeric(newValue, oldValue) {
+  return newValue >= oldValue ? "⬆" : "⬇";
+}
+
 function comparePrices(oldsDollars, newDollars) {
   let isNeedSay = false;
   const dollarsBrecha = {};
@@ -34,9 +42,9 @@ function comparePrices(oldsDollars, newDollars) {
       const newPrice = newDollars[key].venta;
       if (isNumber(oldPrice) && isNumber(newPrice)) {
         const difference = getDiference(newPrice, oldPrice);
-        const percentDifference = (difference / oldPrice) * 100;
+        const percentDifference = getDiferencePercent(difference, oldPrice);
 
-        if (percentDifference >= brechaCotiza) {
+        if (percentDifference >= 0) {
           isNeedSay = true;
           if (!dollarsBrecha[key]) {
             dollarsBrecha[key] = newDollars[key];
@@ -66,11 +74,13 @@ function samePrices(prevDollars, dollarsBrecha) {
     const newPrice = dollarsBrecha[key].venta;
     if (isNumber(oldPrice) && isNumber(newPrice)) {
       const difference = getDiference(newPrice, oldPrice);
-      const percentDifference = (difference / oldPrice) * 100;
+      const percentDifference = getDiferencePercent(difference, oldPrice);
+      const symbolNumeric = getSymbolNumeric(newPrice, oldPrice);
+
       dollarsVariations[key] = {
         ...dollarsBrecha[key],
-        ["venta anterior"]: oldPrice,
-        diferencia: `${percentDifference} %`,
+        ["venta ant"]: oldPrice,
+        variacion: `${symbolNumeric} ${percentDifference} %`,
       };
       if (difference === 0) {
         conditional = true;
