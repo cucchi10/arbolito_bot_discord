@@ -61,7 +61,7 @@ function comparePrices(oldsDollars, newDollars) {
 }
 
 function samePrices(prevDollars, dollarsBrecha) {
-  let isSamePrice = false;
+  let isSamePrice = true;
   const dollarsVariations = {};
   if (!isObject(prevDollars) || !isObject(dollarsBrecha))
     return {
@@ -82,8 +82,8 @@ function samePrices(prevDollars, dollarsBrecha) {
         ["venta ant"]: oldPrice,
         variacion: `${symbolNumeric} ${percentDifference} %`,
       };
-      if (difference === 0) {
-        conditional = true;
+      if (difference > 1) {
+        conditional = false;
       }
     }
   });
