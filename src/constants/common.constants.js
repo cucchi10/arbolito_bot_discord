@@ -1,7 +1,8 @@
 const apiUrl = "https://www.dolarsi.com/api/dolarSiInfo.xml";
 const noCotiza = "No cotiza";
 const sinDatos = "-";
-const brechaCotiza = 1;
+const brechaCotiza = 0.1;
+const brechaCotizaPercent = 1;
 const maxLengthHistotial = 30;
 const diferenceTimeHistorial = 18000000;
 
@@ -67,4 +68,5 @@ module.exports = {
   dollarTypes,
   maxLengthHistotial,
   diferenceTimeHistorial,
+  brechaCotizaPercent,
 };

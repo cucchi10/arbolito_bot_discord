@@ -1,4 +1,4 @@
-const { noCotiza, brechaCotiza } = require("../constants");
+const { noCotiza, brechaCotiza, brechaCotizaPercent } = require("../constants");
 const { isObject } = require("./validations.utils");
 
 function isNumber(value) {
@@ -44,7 +44,7 @@ function comparePrices(oldsDollars, newDollars) {
         const difference = getDiference(newPrice, oldPrice);
         const percentDifference = getDiferencePercent(difference, oldPrice);
 
-        if (percentDifference >= 0) {
+        if (percentDifference >= brechaCotizaPercent) {
           isNeedSay = true;
           if (!dollarsBrecha[key]) {
             dollarsBrecha[key] = newDollars[key];
@@ -82,7 +82,7 @@ function samePrices(prevDollars, dollarsBrecha) {
         ["venta ant"]: oldPrice,
         variacion: `${symbolNumeric} ${percentDifference} %`,
       };
-      if (difference > 1) {
+      if (difference > brechaCotiza) {
         conditional = false;
       }
     }
