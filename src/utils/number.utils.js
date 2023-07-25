@@ -83,7 +83,7 @@ function samePrices(prevDollars, dollarsBrecha) {
         variacion: `${symbolNumeric} ${percentDifference} %`,
       };
       if (difference > brechaCotiza) {
-        conditional = false;
+        isSamePrice = false;
       }
     }
   });
