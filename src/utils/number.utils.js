@@ -80,7 +80,7 @@ function samePrices(prevDollars, dollarsBrecha) {
       dollarsVariations[key] = {
         ...dollarsBrecha[key],
         ["venta ant"]: oldPrice,
-        variacion: `${symbolNumeric} ${percentDifference} %`,
+        variacion: `${symbolNumeric} ${percentDifference.toFixed(2)} %`,
       };
       if (difference > brechaCotiza) {
         isSamePrice = false;
